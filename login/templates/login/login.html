@@ -1,0 +1,23 @@
+{% extends "login/base.html" %}
+{% block content %}
+    {% load socialaccount %}
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+              <div class="card shadow-2-strong" style="border-radius: 1rem;background-color: rgb(205, 205, 205);">
+                <div class="card-body p-5 text-center">
+      
+                  <h3>Welcome</h3>
+                  <a href = "{% provider_login_url 'google'%}" class="btn btn-primary"> Sign in with google</a>
+                  <h3 class="mb-5"></h3>
+                  <form action="{% url 'guest_login' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" style="border: none; padding: 0; background: none; color: #069; text-decoration: underline; cursor: pointer;">Continue as Guest</button>
+                </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+{% endblock content %}

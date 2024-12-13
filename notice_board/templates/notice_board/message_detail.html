@@ -1,0 +1,32 @@
+{% extends 'login/base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+    <h1 class="mb-3">{{ message.title }}</h1>
+    <p>{{ message.content }}</p>
+    <small class="text-muted">Posted by {{ message.author }} on {{ message.date_posted }}</small>
+
+    <div class="replies mt-5">
+        <h4 class="mb-4">Replies</h4>
+        <div class="list-group">
+            {% for reply in reply_messages %}
+                <div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ reply.title }}</h5>
+                        <small class="text-muted">Posted on {{ reply.date_posted }}</small>
+                    </div>
+                    <p class="mb-1">{{ reply.body }}</p>
+                    <small class="text-muted">By {{ reply.author }}</small>
+                </div>
+            {% empty %}
+            <div class="list-group-item">
+                No reply messages found.
+            </div>
+            {% endfor %}
+        </div>
+        <a href="{% url 'list-messages' course_id=message.course.id %}" class="btn btn-primary mt-3">Return to message list</a>
+        <a href="{% url 'post-reply' course_id=message.course.id message_id=message.id %}" class="btn btn-primary mt-3">Post Reply</a>
+    </div>
+</div>
+
+{% endblock %}

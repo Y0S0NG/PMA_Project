@@ -1,0 +1,37 @@
+{% extends 'login/base.html' %}
+{% block content %}
+<div class="container mt-3">
+    <h1>Course: {{ course.name }} Assignment Files</h1>
+    <h2>Filter Assignment Files</h2>
+    <form action="{% url 'get_course_assignment_files' course.id%}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Filter" />
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>File</th>
+                <th>Category</th>
+                <th>Time Uploaded</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file in files %}
+            <tr>
+                <td><a href="{% url 'view_assignment_file' file.id %}">{{ file.file_name }}</a></td>
+                <td>{{file.file_category}}</td> 
+                <td>{{file.upload_time}}</td>
+                <td>{{file.file_description}}</td>          
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No Files Found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

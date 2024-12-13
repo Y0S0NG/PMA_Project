@@ -1,0 +1,6 @@
+{% extends "login/base.html" %}
+{% block content %}
+    <p>Welcome, admin user {{ user.email }}!</p>
+    <p>This section provides administrative controls and overviews.</p>
+    <a href="{% url 'logout' %}">Logout</a>
+{% endblock content %}

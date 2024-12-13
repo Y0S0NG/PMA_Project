@@ -1,0 +1,8 @@
+    <h1>Add a Task to {{ course }}</h1>
+
+    <form action="{% url 'course_assignment_add' course_id%}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ Aform }}
+
+        <input type="submit" value="Submit">
+    </form>

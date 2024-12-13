@@ -1,0 +1,79 @@
+{% extends 'login/base.html' %}
+{% block content %}
+<div class="container mt-4 mb-4">
+    <h1 class="text-center"> My Schedule</h1>
+
+    <div class="row mb-3">
+        <!-- First Column: Sort By Dropdown -->
+        <div class="col-auto">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="sortDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    Sort By
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                    <li><a class="dropdown-item" href="?sort_by=due_date&order={{ request.GET.order|default:'asc' }}">Due
+                        Date</a></li>
+                    <li><a class="dropdown-item" href="?sort_by=priority&order={{ request.GET.order|default:'asc' }}">Priority</a>
+                    </li>
+                    <li><a class="dropdown-item"
+                           href="?sort_by=assignment_type&order={{ request.GET.order|default:'asc' }}">Type</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Second Column: Order Dropdown -->
+        <div class="col-auto">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="orderDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    Order
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="orderDropdown">
+                    <li><a class="dropdown-item" href="?sort_by={{ request.GET.sort_by|default:'due_date' }}&order=asc">Ascending</a>
+                    </li>
+                    <li><a class="dropdown-item"
+                           href="?sort_by={{ request.GET.sort_by|default:'due_date' }}&order=desc">Descending</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Table Schedule -->
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Course Name</th>
+            <!-- <th>Course Code</th> -->
+            <th>Type</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Priority</th>
+            <th>Keywords</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for assignment in assignments %}
+        <tr>
+            <td><a href="{% url 'course_detail' assignment.course_name.id %}"> {{ assignment.course_name }} </a></td>
+            <td>{{ assignment.assignment_type}}</td>
+            <td>{{ assignment.description }}</td>
+            <td>{{ assignment.due_date }}</td>
+            <td>{{ assignment.priority }}</td>
+            <td>{{ assignment.keywords }}</td>
+            <td><a href="{% url 'turn_in' assignment.id %}"> Mark As Completed </a></td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="9">No assignments available.</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div>
+    <a href="{% url 'user_schedule_complete' %}" class="btn btn-primary">Completed Assignments</a>
+</div>
+{% endblock content %}

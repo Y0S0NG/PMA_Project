@@ -1,0 +1,26 @@
+{% extends 'login/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Messages</h1>
+    <div class="list-group">
+        {% for message in message_list %}
+        <a href="{% url 'message-detail' message_id=message.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between align-items-center">
+                <img src="{{ message.author.profile.image.url }}" alt="{{ message.author.username }}" style="width: 40px; height: 40px; border-radius: 50%;">
+                <h5 class="mb-1">{{ message.title }}</h5>
+                <small>Posted on {{ message.date_posted }}</small>
+            </div>
+            <p class="mb-1">{{ message.body }}</p>
+            <small>By {{ message.author }}</small>
+        </a>
+        {% empty %}
+        <div class="list-group-item">
+            No reply messages found.
+        </div>
+        {% endfor %}
+    </div>
+    <a href="{% url 'course_detail' pk=course_id  %}" class="btn btn-primary mt-3">Return to Course Page</a>
+    <a href="{% url 'post-message' course_id %}" class="btn btn-primary mt-3">Post Message</a>
+</div>
+{% endblock content %}

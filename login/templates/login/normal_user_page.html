@@ -1,0 +1,78 @@
+{% extends "login/base.html" %}
+{% block content %}
+
+<h2>Welcome to PMA system! {{ user.username }}</h2>
+<a href="{% url 'logout' %}">Logout</a>
+
+<div class="container mt-4 mb-4">
+    <h1 class="text-center">Your Schedule</h1>
+
+    <div class="row mb-3">
+        <div class="col-auto">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="sortDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    Sort By
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                    <li><a class="dropdown-item"
+                           href="?sort_by=due_date&order={{ request.session.order|default:'asc' }}">Due Date</a></li>
+                    <li><a class="dropdown-item"
+                           href="?sort_by=priority&order={{ request.session.order|default:'asc' }}">Priority</a></li>
+                    <li><a class="dropdown-item"
+                           href="?sort_by=assignment_type&order={{ request.session.order|default:'asc' }}">Type</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="orderDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    Order
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="orderDropdown">
+                    <li><a class="dropdown-item"
+                           href="?sort_by={{ request.session.sort_by|default:'due_date' }}&order=asc">Ascending</a></li>
+                    <li><a class="dropdown-item"
+                           href="?sort_by={{ request.session.sort_by|default:'due_date' }}&order=desc">Descending</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Course Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Priority</th>
+            <th>Keywords</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for assignment in assignments %}
+        <tr>
+            <td><a href="{% url 'course_detail' assignment.course_name.id %}">{{ assignment.course_name.name }}</a></td>
+            <td>{{ assignment.assignment_type }}</td>
+            <td>{{ assignment.description }}</td>
+            <td>{{ assignment.due_date }}</td>
+            <td>{{ assignment.priority }}</td>
+            <td>{{ assignment.keywords }}</td>
+            <td><a href="{% url 'turn_in' assignment.id %}">Mark As Completed</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7">You have no tasks, create or join new projects!</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div>
+    <a href="{% url 'user_schedule_complete' %}" class="btn btn-primary">Completed tasks</a>
+    </div>
+</div>
+{% endblock content %}
