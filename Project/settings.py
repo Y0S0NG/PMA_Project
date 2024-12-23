@@ -32,14 +32,16 @@ SESSION_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = 3600
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
-SECURE_SSL_REDIRECT = True
+if DEBUG:
+    SECURE_SSL_REDIRECT = False
+
 
 ALLOWED_HOSTS = ['b-24-project-a4519c79ccd0.herokuapp.com/','localhost','127.0.0.1']
 
 
 # Application definition
 # 1 for heroku, 3 for local test!
-SITE_ID = 1
+SITE_ID = 3
 
 INSTALLED_APPS = [
     'enroll',
@@ -181,16 +183,27 @@ LOGOUT_REDIRECT_URL = "login_page"
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
+# Delete this when deployed
+AWS_ACCESS_KEY_ID = 'AKIA3C6FL4OACV7TVLFL'
+AWS_SECRET_ACCESS_KEY = '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'
+
+
 AWS_STORAGE_BUCKET_NAME = 'pma-bucket1'
 AWS_S3_FILE_OVERWRITE = False
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 
-# Specifies the storage backend for static files
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+STORAGES = {
+    # Media file
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+    },
+    # CSS and JS file
+    "staticfiles": {
+        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+    },
+}
 
-# Specifies the storage backend for user-uploaded media files
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 '''
