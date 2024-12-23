@@ -183,9 +183,7 @@ LOGOUT_REDIRECT_URL = "login_page"
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
-# Delete this when deployed
-AWS_ACCESS_KEY_ID = 'AKIA3C6FL4OACV7TVLFL'
-AWS_SECRET_ACCESS_KEY = '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'
+
 
 
 AWS_STORAGE_BUCKET_NAME = 'pma-bucket1'
