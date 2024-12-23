@@ -185,16 +185,13 @@ AWS_STORAGE_BUCKET_NAME = 'pma-bucket1'
 AWS_S3_FILE_OVERWRITE = False
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-STORAGES = {
-    # Media file
-    "default": {
-        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
-    },
-    # CSS and JS file
-    "staticfiles": {
-        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
-    },
-}
+
+# Specifies the storage backend for static files
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+
+# Specifies the storage backend for user-uploaded media files
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
 
 '''
 
